@@ -27,7 +27,7 @@ void Motor::EncoderISR()
 
 void Motor::SetSpeed(float speed)
 {
-    if(speed>0)
+    if(speed > 0.0f)
     {
         this->dir = 1;
     }
@@ -35,7 +35,7 @@ void Motor::SetSpeed(float speed)
     {
         this->dir = 0;
     }
-    pwm = 1 - abs(speed)/1000.0f;
+    pwm = 1 - (abs(speed) + 200.0f)/1250.0f;
 }
 
 int Motor::GetEncoderChange()

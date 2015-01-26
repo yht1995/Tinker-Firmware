@@ -87,10 +87,10 @@ int main (void)
 void Mecanum(int Vx,int Vy,int Omega)
 {
     float speed[4];
-    speed[0] = Vx + Vy - (L1 + L2) * Omega;
-    speed[1] = Vx - Vy + (L1 + L2) * Omega;
-    speed[2] = Vx - Vy - (L1 + L2) * Omega;
-    speed[3] = Vx + Vy + (L1 + L2) * Omega;
+    speed[0] = Vx + Vy - Omega;
+    speed[1] = Vx - Vy + Omega;
+    speed[2] = Vx - Vy - Omega;
+    speed[3] = Vx + Vy + Omega;
     for(int i=0; i<4; i++) 
 		{
         speed[i] = speed[i] * Polar[i];
@@ -122,7 +122,7 @@ int ProcessShutdown(int argc, char *argv[])
 
 int ProcessSetRobotSpeed(int argc, char *argv[])
 {
-    static int Vx,Vy,Omega;
+    static int Vx = 0,Vy = 0,Omega = 0;
     if(argc<3) {
         return CMDLINE_TOO_FEW_ARGS;
     }
@@ -162,7 +162,8 @@ int ProcessSetMotorSpeed(int argc, char *argv[])
     if(motorIndex <0 || motorIndex > 4) {
         return CMDLINE_INVALID_ARG;
     }
-		int speed = atoi(argv[2]);
+		float speed = (float)atoi(argv[2]);
+		speed = speed * Polar[motorIndex];
     motorTable[motorIndex]->SetSpeed(speed);
     return 0;
 }

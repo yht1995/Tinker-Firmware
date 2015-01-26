@@ -18,7 +18,7 @@
     
     #define PIN_DIR1 P0_25
     #define PIN_DIR2 P0_26
-    #define PIN_DIR3 P0_30
+    #define PIN_DIR3 P1_30
     #define PIN_DIR4 P0_31
 
 #endif
