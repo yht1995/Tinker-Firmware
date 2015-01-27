@@ -20,6 +20,8 @@ Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 DigitalOut Enable(PIN_EN);
 TCPSocketConnection* client;
 
+LocalFileSystem local("local"); 
+
 void Mecanum(int Vx,int Vy,int Omega);
 
 int main (void)
@@ -181,9 +183,15 @@ int ProcessGetEncoderChange(int argc, char *argv[])
         return CMDLINE_INVALID_ARG;
     }
     char s[10];
-    sprintf(s,"%d",motorTable[motorIndex]->GetEncoderChange());
+		int change = motorTable[motorIndex]->GetEncoderChange() * Polar[motorIndex];
+    sprintf(s,"%d",change);
     client->send(s,strlen(s));
     return 0;
+}
+
+int ProcessUpdate(int argc, char *argv[])
+{
+		
 }
 
 int ProcessHelp(int argc, char *argv[])
@@ -195,6 +203,7 @@ int ProcessHelp(int argc, char *argv[])
 EnableSystem\n\
 ShutdownSystem\n\
 SetRobotSpeed\n\
+SetMotorSpeed\n\
 GetEncoderChange\n\
 type \"help <Command Name>\" for detail.\n\
 ======================\n\
@@ -227,5 +236,6 @@ tCmdLineEntry g_psCmdTable[] =
     { "SetMotorSpeed", ProcessSetMotorSpeed, "SetMotorSpeed" },
     { "GetEncoderChange", ProcessGetEncoderChange, "GetEncoderChange" },
     { "help", ProcessHelp, "Help" },
+		{ "Update", ProcessUpdate, "Update" },
     { 0, 0, 0 }
 };
