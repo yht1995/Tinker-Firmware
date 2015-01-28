@@ -40,16 +40,15 @@ int main (void)
     TCPSocketServer server;
     server.bind(PORT);
     server.listen();
-
     while (true) 
 		{
 				Process = 1;
-        printf("\nWait for new connection...\n");
+        //printf("\nWait for new connection...\n");
         client = new TCPSocketConnection();
         server.accept(*client);
-        client->set_blocking(false, 10);
+        client->set_blocking(false,10);
 				Process = 0;
-        printf("Connection from: %s\n\n", client->get_address());	
+        //printf("Connection from: %s\n\n", client->get_address());	
         char buffer[256],str[256];
 				int n = client->receive(buffer, sizeof(buffer));
 				if(n <= 0)
@@ -57,7 +56,6 @@ int main (void)
 					strcpy(str," ");
 					client->send(str,strlen(str));
 					client->close();
-					continue;
 				}
 				buffer[n] = 0;
 				int result = CmdLineProcess(buffer);
@@ -83,6 +81,7 @@ int main (void)
 				} 
 				client->send(str,strlen(str));
 				client->close();
+				delete client;
     }
 }
 
@@ -191,7 +190,7 @@ int ProcessGetEncoderChange(int argc, char *argv[])
 
 int ProcessUpdate(int argc, char *argv[])
 {
-		
+		return 0;
 }
 
 int ProcessHelp(int argc, char *argv[])

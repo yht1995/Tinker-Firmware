@@ -5,7 +5,6 @@ Motor::Motor(PinName pwm,PinName dir,PinName encoder)
             :pwm(pwm),dir(dir),encoder(encoder)
 {
     encoderCount = 0;
-		
 		this->dir = 1;
 		this->pwm.period_us(500);
 		this->pwm = 1.0f;
