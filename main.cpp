@@ -18,9 +18,11 @@ Motor motor4(PIN_PWM4,PIN_DIR4,PIN_Encoder4);
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 
 DigitalOut Enable(PIN_EN);
-TCPSocketConnection* client;
+//TCPSocketConnection* client;
 
 LocalFileSystem local("local"); 
+UDPSocket server;
+Endpoint client;
 
 void Mecanum(int Vx,int Vy,int Omega);
 
@@ -36,26 +38,17 @@ int main (void)
     printf("IP Address is %s\n", eth.getIPAddress());
 		Connected = 0;
 		Process = 1;
-	
-    TCPSocketServer server;
     server.bind(PORT);
-    server.listen();
     while (true) 
 		{
-				Process = 1;
-        //printf("\nWait for new connection...\n");
-        client = new TCPSocketConnection();
-        server.accept(*client);
-        client->set_blocking(false,10);
-				Process = 0;
-        //printf("Connection from: %s\n\n", client->get_address());	
+				Process = 1;	
         char buffer[256],str[256];
-				int n = client->receive(buffer, sizeof(buffer));
+				int n = server.receiveFrom(client,buffer, sizeof(buffer));
+				Process = 0;
 				if(n <= 0)
 				{
 					strcpy(str," ");
-					client->send(str,strlen(str));
-					client->close();
+					server.sendTo(client,str,strlen(str));
 				}
 				buffer[n] = 0;
 				int result = CmdLineProcess(buffer);
@@ -79,9 +72,7 @@ int main (void)
 				{
 						strcpy(str,"Invalid arguments for command processor!");
 				} 
-				client->send(str,strlen(str));
-				client->close();
-				delete client;
+				server.sendTo(client,str,strlen(str));
     }
 }
 
@@ -184,7 +175,7 @@ int ProcessGetEncoderChange(int argc, char *argv[])
     char s[10];
 		int change = motorTable[motorIndex]->GetEncoderChange() * Polar[motorIndex];
     sprintf(s,"%d",change);
-    client->send(s,strlen(s));
+    server.sendTo(client,s,strlen(s));
     return 0;
 }
 
@@ -223,7 +214,7 @@ Omega -- Rotation speed");
 		{
 			return CMDLINE_TOO_MANY_ARGS;
 		}
-		client->send(str,strlen(str));		
+		server.sendTo(client,str,strlen(str));		
     return 0;
 }
 
