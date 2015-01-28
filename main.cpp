@@ -18,7 +18,6 @@ Motor motor4(PIN_PWM4,PIN_DIR4,PIN_Encoder4);
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 
 DigitalOut Enable(PIN_EN);
-//TCPSocketConnection* client;
 
 LocalFileSystem local("local"); 
 UDPSocket server;
@@ -109,6 +108,10 @@ int ProcessShutdown(int argc, char *argv[])
     }
 		Enable = 1;
 		SysEnable = 1;
+		for(int i=0; i<4; i++) 
+		{
+        motorTable[i]->SetSpeed(0);
+    }
 		return 0;
 }
 
