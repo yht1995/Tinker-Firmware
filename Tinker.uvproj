@@ -362,9 +362,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--gnu --no_rtti </MiscControls>
-              <Define> TARGET_LPC1768,  TARGET_M3,  TARGET_CORTEX_M,  TARGET_NXP,  TARGET_LPC176X,  TARGET_MBED_LPC1768,  TOOLCHAIN_ARM_STD,  TOOLCHAIN_ARM,  __CORTEX_M3,  ARM_MATH_CM3,  MBED_BUILD_TIMESTAMP=1422194821.59,  __MBED__=1,  __ASSERT_MSG, </Define>
+              <Define>TARGET_LPC1768,  TARGET_M3,  TARGET_CORTEX_M,  TARGET_NXP,  TARGET_LPC176X,  TARGET_MBED_LPC1768,  TOOLCHAIN_ARM_STD,  TOOLCHAIN_ARM,  __CORTEX_M3,  ARM_MATH_CM3,  MBED_BUILD_TIMESTAMP=1422194821.59,  __MBED__=1,  __ASSERT_MSG,</Define>
               <Undefine></Undefine>
-              <IncludePath>  .;  cmdline;  EthernetInterface;  EthernetInterface/Socket;  EthernetInterface/lwip;  EthernetInterface/lwip/core;  EthernetInterface/lwip/core/ipv4;  EthernetInterface/lwip/core/snmp;  EthernetInterface/lwip/api;  EthernetInterface/lwip/netif;  EthernetInterface/lwip/netif/ppp;  EthernetInterface/lwip/include;  EthernetInterface/lwip/include/ipv4;  EthernetInterface/lwip/include/ipv4/lwip;  EthernetInterface/lwip/include/lwip;  EthernetInterface/lwip/include/netif;  EthernetInterface/lwip-sys;  EthernetInterface/lwip-sys/arch;  EthernetInterface/lwip-eth;  EthernetInterface/lwip-eth/arch;  EthernetInterface/lwip-eth/arch/TARGET_NXP;  mbed-rtos;  mbed-rtos/rtos;  mbed-rtos/rtx;  mbed-rtos/rtx/TARGET_CORTEX_M;  mbed-rtos/rtx/TARGET_CORTEX_M/TARGET_M3;  mbed-rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_ARM;  mbed;  mbed/TARGET_LPC1768;  mbed/TARGET_LPC1768/TOOLCHAIN_ARM_STD;  mbed/TARGET_LPC1768/TARGET_NXP;  mbed/TARGET_LPC1768/TARGET_NXP/TARGET_LPC176X;  mbed/TARGET_LPC1768/TARGET_NXP/TARGET_LPC176X/TARGET_MBED_LPC1768</IncludePath>
+              <IncludePath>.; FOC; FOC/SerialHalfDuplex;  cmdline;  EthernetInterface;  EthernetInterface/Socket;  EthernetInterface/lwip;  EthernetInterface/lwip/core;  EthernetInterface/lwip/core/ipv4;  EthernetInterface/lwip/core/snmp;  EthernetInterface/lwip/api;  EthernetInterface/lwip/netif;  EthernetInterface/lwip/netif/ppp;  EthernetInterface/lwip/include;  EthernetInterface/lwip/include/ipv4;  EthernetInterface/lwip/include/ipv4/lwip;  EthernetInterface/lwip/include/lwip;  EthernetInterface/lwip/include/netif;  EthernetInterface/lwip-sys;  EthernetInterface/lwip-sys/arch;  EthernetInterface/lwip-eth;  EthernetInterface/lwip-eth/arch;  EthernetInterface/lwip-eth/arch/TARGET_NXP;  mbed-rtos;  mbed-rtos/rtos;  mbed-rtos/rtx;  mbed-rtos/rtx/TARGET_CORTEX_M;  mbed-rtos/rtx/TARGET_CORTEX_M/TARGET_M3;  mbed-rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_ARM;  mbed;  mbed/TARGET_LPC1768;  mbed/TARGET_LPC1768/TOOLCHAIN_ARM_STD;  mbed/TARGET_LPC1768/TARGET_NXP;  mbed/TARGET_LPC1768/TARGET_NXP/TARGET_LPC176X;  mbed/TARGET_LPC1768/TARGET_NXP/TARGET_LPC176X/TARGET_MBED_LPC1768</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -429,9 +429,97 @@
               <FilePath>mbed-rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_ARM/SVC_Table.s</FilePath>
             </File>
             <File>
+              <FileName>Motor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>Motor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>main.cpp</FilePath>
+            </File>
+            <File>
               <FileName>cmdline.c</FileName>
               <FileType>1</FileType>
               <FilePath>cmdline/cmdline.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>0</AlwaysBuild>
+                  <GenerateAssemblyFile>0</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>0</AssembleAssemblyFile>
+                  <PublicsOnly>0</PublicsOnly>
+                  <StopOnExitCode>3</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>2</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <useXO>2</useXO>
+                    <VariousControls>
+                      <MiscControls>--c99</MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>PinConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\PinConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FOC</GroupName>
+          <Files>
+            <File>
+              <FileName>FuRoC_FOC_F28027.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\FOC\FuRoC_FOC_F28027.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SerialHalfDuplex.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\FOC\SerialHalfDuplex\SerialHalfDuplex.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EthernetInterface</GroupName>
+          <Files>
+            <File>
+              <FileName>netif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>EthernetInterface/lwip/core/netif.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -528,54 +616,6 @@
               <FileName>tcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>EthernetInterface/lwip/core/tcp.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>1</IncludeInBuild>
-                  <AlwaysBuild>0</AlwaysBuild>
-                  <GenerateAssemblyFile>0</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>0</AssembleAssemblyFile>
-                  <PublicsOnly>0</PublicsOnly>
-                  <StopOnExitCode>3</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>2</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <useXO>2</useXO>
-                    <VariousControls>
-                      <MiscControls>--c99</MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>netif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>EthernetInterface/lwip/core/netif.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3261,6 +3301,41 @@
               </FileOption>
             </File>
             <File>
+              <FileName>Endpoint.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>EthernetInterface/Socket/Endpoint.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Socket.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>EthernetInterface/Socket/Socket.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>TCPSocketConnection.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>EthernetInterface/Socket/TCPSocketConnection.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>UDPSocket.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>EthernetInterface/Socket/UDPSocket.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>TCPSocketServer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>EthernetInterface/Socket/TCPSocketServer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetInterface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>EthernetInterface/EthernetInterface.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbed-RTOS</GroupName>
+          <Files>
+            <File>
               <FileName>rt_Semaphore.c</FileName>
               <FileType>1</FileType>
               <FilePath>mbed-rtos/rtx/TARGET_CORTEX_M/rt_Semaphore.c</FilePath>
@@ -3931,46 +4006,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
-            </File>
-            <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Motor.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>Motor.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>EthernetInterface.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>EthernetInterface/EthernetInterface.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Endpoint.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>EthernetInterface/Socket/Endpoint.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>TCPSocketServer.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>EthernetInterface/Socket/TCPSocketServer.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>UDPSocket.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>EthernetInterface/Socket/UDPSocket.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Socket.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>EthernetInterface/Socket/Socket.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>TCPSocketConnection.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>EthernetInterface/Socket/TCPSocketConnection.cpp</FilePath>
             </File>
             <File>
               <FileName>Thread.cpp</FileName>

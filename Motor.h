@@ -6,20 +6,22 @@
 #define __MOTOR_H_
 
 #include "mbed.h"
+#include "FuRoC_FOC_F28027.h"
 
 class Motor
 {
 private:
-    PwmOut pwm;
-    DigitalOut dir;
+    FocMotor focMotor;
     InterruptIn encoder;
+		bool dir;
     int encoderCount;
     float targetPwm;
     void EncoderISR();
 public:
-    Motor(PinName pwm,PinName dir,PinName encoder);
+    Motor(PinName tx, PinName rx ,int MotorID,PinName encoder);
     void SetSpeed(float speed);
     int GetEncoderChange();
+		void EnableDriver(bool isEnable);
 };
 
 #endif

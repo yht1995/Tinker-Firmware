@@ -9,16 +9,7 @@
     #define PIN_Encoder3 P0_9
     #define PIN_Encoder4 P0_6
     
-    #define PIN_PWM1 P2_5
-    #define PIN_PWM2 P2_4
-    #define PIN_PWM3 P2_3
-    #define PIN_PWM4 P2_2
-    
-    #define PIN_EN P4_29
-    
-    #define PIN_DIR1 P0_25
-    #define PIN_DIR2 P0_26
-    #define PIN_DIR3 P1_30
-    #define PIN_DIR4 P1_31
+		#define PIN_FOCMOTOR_TX P2_0
+		#define PIN_FOCMOTOR_RX P2_1
 
 #endif
