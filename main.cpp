@@ -72,6 +72,8 @@ int main (void)
 						strcpy(str,"Invalid arguments for command processor!");
 				} 
 				server.sendTo(client,str,strlen(str));
+				strcpy(str,"");
+				server.sendTo(client,str,strlen(str));
     }
 }
 

@@ -2,3 +2,4 @@ build
 *.bak
 *.yht
 .hg
+/*.uvopt
