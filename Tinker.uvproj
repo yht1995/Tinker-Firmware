@@ -486,6 +486,16 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>PinConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\PinConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

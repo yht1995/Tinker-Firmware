@@ -31,7 +31,6 @@ FocMotor::FocMotor(PinName tx, PinName rx ,int ID)
 {
     uart.baud(9600);
     motorID = ID;
-    timer = new Timer;
 }
 
 int FocMotor::SetFlagenableSys(bool enable)
@@ -44,10 +43,7 @@ int FocMotor::SetFlagenableForceAngle(bool forceAngle)
 }
 int FocMotor::SetSpeedRefrpm(int refSpeed)
 {
-      if(abs(refSpeed)>=50)
-    return CommPackage(writePackage,FOC_SpeedRef_rpm,refSpeed);
-        else
-        return CommPackage(writePackage,FOC_SpeedRef_rpm,0);
+		return CommPackage(writePackage,FOC_SpeedRef_rpm,refSpeed);
 }
 int FocMotor::SetKiSpd(int KiSpd)
 {

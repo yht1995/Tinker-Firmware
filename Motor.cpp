@@ -1,13 +1,11 @@
 #include "Motor.h"
 #include <math.h>
 
-Motor::Motor(PinName pwm,PinName dir,PinName encoder)
-            :pwm(pwm),dir(dir),encoder(encoder)
+Motor::Motor(PinName tx, PinName rx ,int MotorID,PinName encoder)
+            :focMotor(tx,rx,MotorID),encoder(encoder)
 {
     encoderCount = 0;
-		this->dir = 1;
-		this->pwm.period_us(500);
-		this->pwm = 1.0f;
+		this->dir = true;
     this->encoder.rise(this, &Motor::EncoderISR);
     this->encoder.fall(this, &Motor::EncoderISR);
 }
@@ -24,6 +22,11 @@ void Motor::EncoderISR()
     }
 }
 
+void Motor::EnableDriver(bool isEnable)
+{
+	 this->focMotor.SetFlagenableSys(isEnable);
+}
+
 void Motor::SetSpeed(float speed)
 {
     if(speed > 0.0f)
@@ -34,7 +37,7 @@ void Motor::SetSpeed(float speed)
     {
         this->dir = 0;
     }
-    pwm = 1 - abs(speed)/1000.0f;
+    this->focMotor.SetSpeedRefrpm(speed);
 }
 
 int Motor::GetEncoderChange()

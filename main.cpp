@@ -10,14 +10,12 @@ DigitalOut Connected(LED1);
 DigitalOut Process(LED2);
 DigitalOut SysEnable(LED3);
 
-Motor motor1(PIN_PWM1,PIN_DIR1,PIN_Encoder1);
-Motor motor2(PIN_PWM2,PIN_DIR2,PIN_Encoder2);
-Motor motor3(PIN_PWM3,PIN_DIR3,PIN_Encoder3);
-Motor motor4(PIN_PWM4,PIN_DIR4,PIN_Encoder4);
+Motor motor1(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,1,PIN_Encoder1);
+Motor motor2(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,2,PIN_Encoder2);
+Motor motor3(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,3,PIN_Encoder3);
+Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,4,PIN_Encoder4);
 
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
-
-DigitalOut Enable(PIN_EN);
 
 LocalFileSystem local("local"); 
 UDPSocket server;
@@ -97,7 +95,10 @@ int ProcessEnable(int argc, char *argv[])
 		{
         return CMDLINE_TOO_MANY_ARGS;
     }
-		Enable = 0;
+		for(int i=0; i<4; i++) 
+		{
+        motorTable[i]->EnableDriver(true);
+    }
 		SysEnable = 0;
 		return 0;
 }
@@ -108,12 +109,15 @@ int ProcessShutdown(int argc, char *argv[])
 		{
         return CMDLINE_TOO_MANY_ARGS;
     }
-		Enable = 1;
-		SysEnable = 1;
 		for(int i=0; i<4; i++) 
 		{
         motorTable[i]->SetSpeed(0);
     }
+		for(int i=0; i<4; i++) 
+		{
+        motorTable[i]->EnableDriver(false);
+    }
+		SysEnable = 1;
 		return 0;
 }
 
