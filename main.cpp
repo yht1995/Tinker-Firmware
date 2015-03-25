@@ -17,7 +17,7 @@ Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,4,PIN_Encoder4);
 
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 
-LocalFileSystem local("local"); 
+//LocalFileSystem local("local"); 
 UDPSocket server;
 Endpoint client;
 

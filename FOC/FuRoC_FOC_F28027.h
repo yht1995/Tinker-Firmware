@@ -86,7 +86,6 @@ public:
     int GetMaxAccelrpmps(void);
 private:
     SerialHalfDuplex uart;
-    Timer *timer;
     int motorID;
     int CommPackage(PackageType type,int address,int data);
 };
