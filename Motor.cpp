@@ -46,3 +46,8 @@ int Motor::GetEncoderChange()
     this->encoderCount = 0;
     return temp;
 }
+
+void Motor::SetMaxAccel(float accel)
+{
+		this->focMotor.SetMaxAccelrpmps(accel);
+}

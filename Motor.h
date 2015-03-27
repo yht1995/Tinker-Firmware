@@ -20,6 +20,7 @@ private:
 public:
     Motor(PinName tx, PinName rx ,int MotorID,PinName encoder);
     void SetSpeed(float speed);
+		void SetMaxAccel(float accel);
     int GetEncoderChange();
 		void EnableDriver(bool isEnable);
 };
