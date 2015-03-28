@@ -4,20 +4,26 @@
 #include "PinConfig.h"
 #include "cmdline.h"
 #include "config.h"
+#include "Receive.h"
 #include <string>
 
 DigitalOut Connected(LED1);
 DigitalOut Process(LED2);
 DigitalOut SysEnable(LED3);
 
-Motor motor1(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,1,PIN_Encoder1);
-Motor motor2(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,2,PIN_Encoder2);
-Motor motor3(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,3,PIN_Encoder3);
-Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,4,PIN_Encoder4);
-
+Motor motor1(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0011,PIN_Encoder1);
+Motor motor2(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0012,PIN_Encoder2);
+Motor motor3(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0013,PIN_Encoder3);
+Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0014,PIN_Encoder4);
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 
-LocalFileSystem local("local"); 
+Receive receive1(PIN_RECEIVE_1);
+Receive receive2(PIN_RECEIVE_2);
+Receive receive3(PIN_RECEIVE_3);
+Receive receive4(PIN_RECEIVE_4);
+Receive *receiveList[4] = {&receive1,&receive2,&receive3,&receive4};
+
+//LocalFileSystem local("local"); 
 UDPSocket server;
 Endpoint client;
 
@@ -188,6 +194,21 @@ int ProcessGetEncoderChange(int argc, char *argv[])
     return 0;
 }
 
+int ProcessSetMaxAccel(int argc,char* argv[])
+{
+	  if(argc<2) {
+        return CMDLINE_TOO_FEW_ARGS;
+    }
+    if(argc>2) {
+        return CMDLINE_TOO_MANY_ARGS;
+    }
+		for(int i=0; i<4; i++) 
+		{
+        motorTable[i]->SetMaxAccel(atoi(argv[1]));
+    }
+		return 0;
+}
+
 int ProcessUpdate(int argc, char *argv[])
 {
 		return 0;
@@ -203,6 +224,7 @@ EnableSystem\n\
 ShutdownSystem\n\
 SetRobotSpeed\n\
 SetMotorSpeed\n\
+SetMaxAccel\n\
 GetEncoderChange\n\
 type \"help <Command Name>\" for detail.\n\
 ======================\n\
@@ -234,6 +256,7 @@ tCmdLineEntry g_psCmdTable[] =
     { "SetRobotSpeed", ProcessSetRobotSpeed, "SetRobotSpeed" },
     { "SetMotorSpeed", ProcessSetMotorSpeed, "SetMotorSpeed" },
     { "GetEncoderChange", ProcessGetEncoderChange, "GetEncoderChange" },
+		{ "SetMaxAccel", ProcessSetMaxAccel, "SetMaxAccel" },
     { "help", ProcessHelp, "Help" },
 		{ "Update", ProcessUpdate, "Update" },
     { 0, 0, 0 }

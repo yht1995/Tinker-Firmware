@@ -85,8 +85,7 @@ public:
     int GetKpSpd(void);
     int GetMaxAccelrpmps(void);
 private:
-    SerialHalfDuplex uart;
-    Timer *timer;
+    Serial uart;
     int motorID;
     int CommPackage(PackageType type,int address,int data);
 };

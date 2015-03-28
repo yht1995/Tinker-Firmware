@@ -7,4 +7,4 @@ const float R = 56.0f;  		//mm
 const float L1 = 250.0f;  	//mm
 const float L2 = 250.0f;		//mm
 
-const int Polar[4] = {-1,1,-1,1};
+const int Polar[4] = {-1,-1,1,1};
