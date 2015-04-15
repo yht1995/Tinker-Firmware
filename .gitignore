@@ -3,3 +3,4 @@ build
 *.yht
 .hg
 /*.uvopt
+*.hgignore
