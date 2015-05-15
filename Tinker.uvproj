@@ -431,12 +431,12 @@
             <File>
               <FileName>Motor.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>Motor.cpp</FilePath>
+              <FilePath>.\src\Motor.cpp</FilePath>
             </File>
             <File>
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>main.cpp</FilePath>
+              <FilePath>.\src\main.cpp</FilePath>
             </File>
             <File>
               <FileName>cmdline.c</FileName>
@@ -486,16 +486,6 @@
                 </FileArmAds>
               </FileOption>
             </File>
-            <File>
-              <FileName>PinConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\PinConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\config.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -505,11 +495,6 @@
               <FileName>FuRoC_FOC_F28027.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\FOC\FuRoC_FOC_F28027.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SerialHalfDuplex.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\FOC\SerialHalfDuplex\SerialHalfDuplex.cpp</FilePath>
             </File>
           </Files>
         </Group>
