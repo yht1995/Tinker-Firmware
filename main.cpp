@@ -16,14 +16,7 @@ Motor motor2(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0012,PIN_Encoder2);
 Motor motor3(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0013,PIN_Encoder3);
 Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0014,PIN_Encoder4);
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
-
-Receive receive1(PIN_RECEIVE_1);
-Receive receive2(PIN_RECEIVE_2);
-Receive receive3(PIN_RECEIVE_3);
-Receive receive4(PIN_RECEIVE_4);
-Receive *receiveList[4] = {&receive1,&receive2,&receive3,&receive4};
-
-//LocalFileSystem local("local"); 
+ 
 UDPSocket server;
 Endpoint client;
 
@@ -54,6 +47,7 @@ int main (void)
 					server.sendTo(client,str,strlen(str));
 				}
 				buffer[n] = 0;
+				printf("%s\n",buffer);
 				int result = CmdLineProcess(buffer);
 				if(result == 0)
 				{
@@ -75,6 +69,7 @@ int main (void)
 				{
 						strcpy(str,"Invalid arguments for command processor!");
 				} 
+				printf("%s\n",str);
 				server.sendTo(client,str,strlen(str));
 				strcpy(str,"");
 				server.sendTo(client,str,strlen(str));
