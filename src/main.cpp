@@ -17,13 +17,6 @@ Motor motor3(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0013,PIN_Encoder3);
 Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0014,PIN_Encoder4);
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 
-//Receive receive1(PIN_RECEIVE_1);
-//Receive receive2(PIN_RECEIVE_2);
-//Receive receive3(PIN_RECEIVE_3);
-//Receive receive4(PIN_RECEIVE_4);
-//Receive *receiveList[4] = {&receive1,&receive2,&receive3,&receive4};
-
-//LocalFileSystem local("local"); 
 UDPSocket server;
 Endpoint client;
 
@@ -31,53 +24,55 @@ void Mecanum(int Vx,int Vy,int Omega);
 
 int main (void)
 {
-		Connected = 1;
-		Process = 1;
-		SysEnable = 1;
+	Connected = 1;
+	Process = 1;
+	SysEnable = 1;
     printf("setting up\n");
     EthernetInterface eth;
     eth.init(IP,NETMASK,GATEWAY);
     eth.connect();
     printf("IP Address is %s\n", eth.getIPAddress());
-		Connected = 0;
-		Process = 1;
+	Connected = 0;
+	Process = 1;
     server.bind(PORT);
     while (true) 
+	{
+		Process = 1;	
+		char buffer[256],str[256];
+		int n = server.receiveFrom(client,buffer, sizeof(buffer));
+		Process = 0;
+		if(n <= 0)
 		{
-				Process = 1;	
-        char buffer[256],str[256];
-				int n = server.receiveFrom(client,buffer, sizeof(buffer));
-				Process = 0;
-				if(n <= 0)
-				{
-					strcpy(str," ");
-					server.sendTo(client,str,strlen(str));
-				}
-				buffer[n] = 0;
-				int result = CmdLineProcess(buffer);
-				if(result == 0)
-				{
-						strcpy(str,"Command Completed!");
-				}
-				else if(result == CMDLINE_BAD_CMD) 
-				{
-						strcpy(str,"Bad command!");
-				} 
-				else if(result == CMDLINE_TOO_MANY_ARGS) 
-				{
-						strcpy(str,"Too many arguments for command processor!");
-				}
-				else if(result == CMDLINE_TOO_FEW_ARGS)
-				{
-						strcpy(str,"Too few arguments for command processor!");
-				}
-				else if(result == CMDLINE_INVALID_ARG)
-				{
-						strcpy(str,"Invalid arguments for command processor!");
-				} 
-				server.sendTo(client,str,strlen(str));
-				strcpy(str,"");
-				server.sendTo(client,str,strlen(str));
+			strcpy(str," ");
+			server.sendTo(client,str,strlen(str));
+		}
+		buffer[n] = 0;
+		printf("%s\n",buffer);
+		int result = CmdLineProcess(buffer);
+		if(result == 0)
+		{
+			strcpy(str,"Command Completed!");
+		}
+		else if(result == CMDLINE_BAD_CMD) 
+		{
+			strcpy(str,"Bad command!");
+		} 
+		else if(result == CMDLINE_TOO_MANY_ARGS) 
+		{
+			strcpy(str,"Too many arguments for command processor!");
+		}
+		else if(result == CMDLINE_TOO_FEW_ARGS)
+		{
+			strcpy(str,"Too few arguments for command processor!");
+		}
+		else if(result == CMDLINE_INVALID_ARG)
+		{
+			strcpy(str,"Invalid arguments for command processor!");
+		} 
+		printf("%s\n",str);
+		server.sendTo(client,str,strlen(str));
+		strcpy(str,"");
+		server.sendTo(client,str,strlen(str));
     }
 }
 
@@ -89,7 +84,7 @@ void Mecanum(int Vx,int Vy,int Omega)
     speed[2] = Vx - Vy - Omega;
     speed[3] = Vx + Vy + Omega;
     for(int i=0; i<4; i++) 
-		{
+	{
         speed[i] = speed[i] * Polar[i];
         motorTable[i]->SetSpeed(speed[i]);
     }
@@ -97,34 +92,34 @@ void Mecanum(int Vx,int Vy,int Omega)
 
 int ProcessEnable(int argc, char *argv[])
 {
-		if(argc>1) 
-		{
+	if(argc>1) 
+	{
         return CMDLINE_TOO_MANY_ARGS;
     }
-		for(int i=0; i<4; i++) 
-		{
+	for(int i=0; i<4; i++) 
+	{
         motorTable[i]->EnableDriver(true);
     }
-		SysEnable = 0;
-		return 0;
+	SysEnable = 0;
+	return 0;
 }
 	
 int ProcessShutdown(int argc, char *argv[])
 {
-		if(argc>1) 
-		{
+	if(argc>1) 
+	{
         return CMDLINE_TOO_MANY_ARGS;
     }
-		for(int i=0; i<4; i++) 
-		{
+	for(int i=0; i<4; i++) 
+	{
         motorTable[i]->SetSpeed(0);
     }
-		for(int i=0; i<4; i++) 
-		{
+	for(int i=0; i<4; i++) 
+	{
         motorTable[i]->EnableDriver(false);
     }
-		SysEnable = 1;
-		return 0;
+	SysEnable = 1;
+	return 0;
 }
 
 int ProcessSetRobotSpeed(int argc, char *argv[])
@@ -137,22 +132,22 @@ int ProcessSetRobotSpeed(int argc, char *argv[])
         return CMDLINE_TOO_MANY_ARGS;
     }
     if(!strcmp(argv[1],"Vx")) 
-		{
+	{
         Vx = atoi(argv[2]);
     } 
-		else if(!strcmp(argv[1],"Vy")) 
-		{
+	else if(!strcmp(argv[1],"Vy")) 
+	{
         Vy = atoi(argv[2]);
     } 
-		else if(!strcmp(argv[1],"Omega"))
-		{
+	else if(!strcmp(argv[1],"Omega"))
+	{
         Omega = atoi(argv[2]);
     } 
-		else 
-		{
+	else 
+	{
         return CMDLINE_INVALID_ARG;
     }
-		printf("Vx:%d,Vy:%d,Omega:%d\n",Vx,Vy,Omega);
+	printf("Vx:%d,Vy:%d,Omega:%d\n",Vx,Vy,Omega);
     Mecanum(Vx,Vy,Omega);
     return 0;
 }
@@ -169,8 +164,8 @@ int ProcessSetMotorSpeed(int argc, char *argv[])
     if(motorIndex <0 || motorIndex > 4) {
         return CMDLINE_INVALID_ARG;
     }
-		float speed = (float)atoi(argv[2]);
-		speed = speed * Polar[motorIndex];
+	float speed = (float)atoi(argv[2]);
+	speed = speed * Polar[motorIndex];
     motorTable[motorIndex]->SetSpeed(speed);
     return 0;
 }
@@ -196,27 +191,27 @@ int ProcessGetEncoderChange(int argc, char *argv[])
 
 int ProcessSetMaxAccel(int argc,char* argv[])
 {
-	  if(argc<2) {
+	if(argc<2) {
         return CMDLINE_TOO_FEW_ARGS;
     }
     if(argc>2) {
         return CMDLINE_TOO_MANY_ARGS;
     }
-		for(int i=0; i<4; i++) 
-		{
+	for(int i=0; i<4; i++) 
+	{
         motorTable[i]->SetMaxAccel(atoi(argv[1]));
     }
-		return 0;
+	return 0;
 }
 
 int ProcessUpdate(int argc, char *argv[])
 {
-		return 0;
+	return 0;
 }
 
 int ProcessHelp(int argc, char *argv[])
 {
-		char str[512];
+	char str[512];
     if(argc == 1)
     {
 			strcpy(str,"\nThese commmand can be used:\n\
@@ -251,13 +246,13 @@ Omega -- Rotation speed");
 
 tCmdLineEntry g_psCmdTable[] = 
 {
-		{ "EnableSystem", ProcessEnable, "EnableSystem" },
-		{ "ShutdownSystem", ProcessShutdown, "ShutdownSystem" },
+	{ "EnableSystem", ProcessEnable, "EnableSystem" },
+	{ "ShutdownSystem", ProcessShutdown, "ShutdownSystem" },
     { "SetRobotSpeed", ProcessSetRobotSpeed, "SetRobotSpeed" },
     { "SetMotorSpeed", ProcessSetMotorSpeed, "SetMotorSpeed" },
     { "GetEncoderChange", ProcessGetEncoderChange, "GetEncoderChange" },
-		{ "SetMaxAccel", ProcessSetMaxAccel, "SetMaxAccel" },
+	{ "SetMaxAccel", ProcessSetMaxAccel, "SetMaxAccel" },
     { "help", ProcessHelp, "Help" },
-		{ "Update", ProcessUpdate, "Update" },
+	{ "Update", ProcessUpdate, "Update" },
     { 0, 0, 0 }
 };

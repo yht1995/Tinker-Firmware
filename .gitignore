@@ -4,3 +4,4 @@ build
 .hg
 /*.uvopt
 *.hgignore
+*.ilb

@@ -21,10 +21,6 @@
 
 // the includes
 #include "FuRoC_FOC_F28027.h"
-#include "platform.h"
-#include "Stream.h"
-#include "SerialBase.h"
-#include "serial_api.h"
 
 FocMotor::FocMotor(PinName tx, PinName rx ,int ID)
             :uart(tx,rx)
