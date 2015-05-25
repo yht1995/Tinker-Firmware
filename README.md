@@ -1,5 +1,5 @@
 # Tinker-Firmware
-Building status: [![Build Status](http://furocip407a.oicp.net:8111/app/rest/builds/buildType:(id:TinkerFirmware_Build)/statusIcon)](http://furocip407a.oicp.net:8111/viewType.html?buildTypeId=TinkerFirmware_Build&guest=1)
+Building status: [![Build Status](http://407a.furoc.net:8111/app/rest/builds/buildType:(id:TinkerFirmware_Build)/statusIcon)](http://furocip407a.oicp.net:8111/viewType.html?buildTypeId=TinkerFirmware_Build&guest=1)
 
 The Firmware of Tinker is based on ARM mbed
 

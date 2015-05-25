@@ -16,5 +16,8 @@
 	#define PIN_RECEIVE_2 P2_3
 	#define PIN_RECEIVE_3 P2_4
 	#define PIN_RECEIVE_4 P2_5
+	
+	#define PIN_DYNAMIXEL_TX P0_10
+	#define PIN_DYNAMIXEL_RX P0_11
 
 #endif
