@@ -107,7 +107,7 @@ int ProcessGetEncoderChange(int argc, char *argv[])
     if(argc>1) {
         return CMDLINE_TOO_MANY_ARGS;
     }
-    char s[10];
+    char s[50];
 		int change[4];
 		for(int i = 0;i<4;i++)
 		{
@@ -135,28 +135,28 @@ int ProcessSetMaxAccel(int argc,char* argv[])
 
 int ProcessRobotArmSet(int argc,char* argv[])
 {
-	  if(argc<JOINTNUM+1) {
-        return CMDLINE_TOO_FEW_ARGS;
-    }
-    if(argc>JOINTNUM+1) {
-        return CMDLINE_TOO_MANY_ARGS;
-    }
-		int data[JOINTNUM];
-		for(int i=0;i<JOINTNUM;i++)
-		{
-			data[i] = atoi(argv[i+1]);
-		}
-		if(robotArm.SetArmPosition(data) == 0)
-		{	
-			return 0;
-		}
-		else
-		{
-			char s[10];
-			sprintf(s,"Time Out");
-			server.sendTo(client,s,strlen(s));
-			return -1;
-		}
+//	  if(argc<JOINTNUM+1) {
+//        return CMDLINE_TOO_FEW_ARGS;
+//    }
+//    if(argc>JOINTNUM+1) {
+//        return CMDLINE_TOO_MANY_ARGS;
+//    }
+//		int data[JOINTNUM];
+//		for(int i=0;i<JOINTNUM;i++)
+//		{
+//			data[i] = atoi(argv[i+1]);
+//		}
+//		if(robotArm.SetArmPosition(data) == 0)
+//		{	
+//			return 0;
+//		}
+//		else
+//		{
+//			char s[10];
+//			sprintf(s,"Time Out");
+//			server.sendTo(client,s,strlen(s));
+//			return -1;
+//		}
 }
 
 

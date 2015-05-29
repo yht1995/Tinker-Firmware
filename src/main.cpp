@@ -10,7 +10,7 @@ Motor motor3(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0013,PIN_Encoder3);
 Motor motor4(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0014,PIN_Encoder4);
 Motor *motorTable[4] = {&motor1,&motor2,&motor3,&motor4};
 
-RobotArm robotArm(PIN_DYNAMIXEL_TX,PIN_DYNAMIXEL_RX);
+//RobotArm robotArm(PIN_DYNAMIXEL_TX,PIN_DYNAMIXEL_RX);
 
 UDPSocket server;
 Endpoint client;
