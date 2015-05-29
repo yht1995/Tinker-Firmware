@@ -2,12 +2,17 @@
 
 tCmdLineEntry g_psCmdTable[] = 
 {
-	{ "EnableSystem", ProcessEnable, "EnableSystem" },
-	{ "ShutdownSystem", ProcessShutdown, "ShutdownSystem" },
+		{ "EnableSystem", ProcessEnable, "EnableSystem" },
+		{ "ES", ProcessEnable, "EnableSystem" },
+		{ "ShutdownSystem", ProcessShutdown, "ShutdownSystem" },
+		{ "SS", ProcessShutdown, "ShutdownSystem" },
     { "SetRobotSpeed", ProcessSetRobotSpeed, "SetRobotSpeed" },
+		{ "SR", ProcessSetRobotSpeed, "SetRobotSpeed" },
     { "SetMotorSpeed", ProcessSetMotorSpeed, "SetMotorSpeed" },
+		{ "SM", ProcessSetMotorSpeed, "SetMotorSpeed" },
     { "GetEncoderChange", ProcessGetEncoderChange, "GetEncoderChange" },
-	{ "SetMaxAccel", ProcessSetMaxAccel, "SetMaxAccel" },
+		{ "GE", ProcessGetEncoderChange, "GetEncoderChange" },
+		{ "SetMaxAccel", ProcessSetMaxAccel, "SetMaxAccel" },
     { "RobotArmSet", ProcessRobotArmSet, "RobotArmSet" },
     { "help", ProcessHelp, "Help" },
     { 0, 0, 0 }
@@ -62,28 +67,15 @@ int ProcessShutdown(int argc, char *argv[])
 int ProcessSetRobotSpeed(int argc, char *argv[])
 {
     static int Vx = 0,Vy = 0,Omega = 0;
-    if(argc<3) {
+    if(argc<4) {
         return CMDLINE_TOO_FEW_ARGS;
     }
-    if(argc>3) {
+    if(argc>4) {
         return CMDLINE_TOO_MANY_ARGS;
     }
-    if(!strcmp(argv[1],"Vx")) 
-		{
-        Vx = atoi(argv[2]);
-    } 
-		else if(!strcmp(argv[1],"Vy")) 
-		{
-        Vy = atoi(argv[2]);
-    } 
-		else if(!strcmp(argv[1],"Omega"))
-		{
-        Omega = atoi(argv[2]);
-    } 
-		else 
-		{
-        return CMDLINE_INVALID_ARG;
-    }
+		Vx = atoi(argv[1]);
+		Vy = atoi(argv[2]);
+		Omega = atoi(argv[3]);
 		printf("Vx:%d,Vy:%d,Omega:%d\n",Vx,Vy,Omega);
     Mecanum(Vx,Vy,Omega);
     return 0;
@@ -109,19 +101,19 @@ int ProcessSetMotorSpeed(int argc, char *argv[])
 
 int ProcessGetEncoderChange(int argc, char *argv[])
 {
-    if(argc<2) {
+    if(argc<1) {
         return CMDLINE_TOO_FEW_ARGS;
     }
-    if(argc>2) {
+    if(argc>1) {
         return CMDLINE_TOO_MANY_ARGS;
     }
-    int motorIndex = atoi(argv[1]) - 1;
-    if(motorIndex <0 || motorIndex > 4) {
-        return CMDLINE_INVALID_ARG;
-    }
     char s[10];
-		int change = motorTable[motorIndex]->GetEncoderChange() * Polar[motorIndex];
-    sprintf(s,"%d",change);
+		int change[4];
+		for(int i = 0;i<4;i++)
+		{
+			change[i] = motorTable[i]->GetEncoderChange() * Polar[i];
+		}
+    sprintf(s,"%d %d %d %d",change[0],change[1],change[2],change[3]);
     server.sendTo(client,s,strlen(s));
     return 0;
 }

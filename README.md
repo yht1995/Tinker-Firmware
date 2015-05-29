@@ -1,5 +1,5 @@
 # Tinker-Firmware
-Building status: [![Build Status](http://407a.furoc.net:8111/app/rest/builds/buildType:(id:TinkerFirmware_Build)/statusIcon)](http://furocip407a.oicp.net:8111/viewType.html?buildTypeId=TinkerFirmware_Build&guest=1)
+Building status: [![Build Status](http://407a.furoc.net:8111/app/rest/builds/buildType:(id:TinkerFirmware_Build)/statusIcon)](http://407a.furoc.net:8111/viewType.html?buildTypeId=TinkerFirmware_Build&guest=1)
 
 The Firmware of Tinker is based on ARM mbed
 
@@ -20,39 +20,36 @@ Mecanum轮的安装参考
 - 电机方向
 
 ## 命令说明
-### EnableSystem
+### EnableSystem / ES
 __功能__：使能电机驱动器
 
 __参数个数__：0
 
 __参数说明__：无
 
-### ShutdownSystem
+### ShutdownSystem / SS
 __功能__：关闭电机驱动器
 
 __参数个数__：0
 
 __参数说明__：无
 
-### SetRobotSpeed
+### SetRobotSpeed /SR
 __功能__：设置机器人速度
 
-__参数个数__：2
+__参数个数__：3
 
 __参数说明__：
-  - 参数1：（枚举）
-    - Vx X方向速度
-    - Vy Y方向速度
-    - Omega 自转速度
-  - 参数2：（整数）表示速度值
+  - 参数1：（整数）X方向速度
+  - 参数2：（整数）Y方向速度
+  - 参数3：（整数）自转速度
 
-### GetEncoderChange
+### GetEncoderChange / GE
 __功能__：获取编码器变化量
 
-__参数个数__：1
+__参数个数__：0
 
-__参数说明__：
-  - 参数1：（整数）编码器编号
+__参数说明__：无
   
 __返回值说明__：
   - （整数）编码器变化量 （__每次读取后清零__）
