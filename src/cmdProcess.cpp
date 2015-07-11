@@ -1,4 +1,5 @@
 #include "cmdProcess.h"
+#include "PlatFormMove.h"
 
 tCmdLineEntry g_psCmdTable[] = 
 {
@@ -15,6 +16,10 @@ tCmdLineEntry g_psCmdTable[] =
 		{ "SetMaxAccel", ProcessSetMaxAccel, "SetMaxAccel" },
     { "RobotArmSet", ProcessRobotArmSet, "RobotArmSet" },
     { "help", ProcessHelp, "Help" },
+	{ "PU", ProcessPlatUp, "PlatformUp" },
+	{ "PD", ProcessPlatDown, "PlatformDown"},
+	{ "CT", CheckPlatTop, "CheckPlatformTop"},
+	{ "CT", CheckPlatButtom, "CheckPlatformButtom"},
     { 0, 0, 0 }
 };
 
@@ -193,4 +198,48 @@ Omega -- Rotation speed");
 	}
 	server.sendTo(client,str,strlen(str));		
     return 0;
+}
+
+int ProcessPlatUp(int argc, char * argv[])
+{
+	if(argc > 1)
+	{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+	move_up_platform();
+	return 0;
+}
+
+int ProcessPlatDown(int argc, char * argv[])
+{
+	if(argc > 1)
+	{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+	move_down_platform();
+	return 0;	
+}
+
+int CheckPlatTop(int argc, char * argv[])
+{
+	if(argc > 1)
+	{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+	char s[10];
+	sprintf(s, "%d", !topNotReached);
+	server.sendTo(client, s, strlen(s));
+	return 0;
+}
+
+int CheckPlatButtom(int argc, char * argv[])
+{
+	if(argc > 1)
+	{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+	char s[10];
+	sprintf(s, "%d", !buttomNotReached);
+	server.sendTo(client, s, strlen(s));
+	return 0;
 }

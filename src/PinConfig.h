@@ -14,5 +14,10 @@
 	
 	#define PIN_DYNAMIXEL_TX P0_10
 	#define PIN_DYNAMIXEL_RX P0_11
+	
+	#define PIN_UP_OUT P2_4
+	#define PIN_DOWN_OUT P2_5
+	#define PIN_TOP_REACH P0_28
+	#define PIN_BUTTOM_REACH P0_27
 
 #endif

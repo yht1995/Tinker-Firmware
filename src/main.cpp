@@ -1,8 +1,16 @@
 #include "main.h"
+#include "PlatFormMove.h"
 
 DigitalOut Connected(LED1);
 DigitalOut Process(LED2);
 DigitalOut SysEnable(LED3);
+
+InterruptIn topNotReached(PIN_TOP_REACH);
+InterruptIn buttomNotReached(PIN_BUTTOM_REACH);
+
+DigitalOut downMoveOut(PIN_DOWN_OUT);
+DigitalOut upMoveOut(PIN_UP_OUT);
+
 
 Motor motor1(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0011,PIN_Encoder1);
 Motor motor2(PIN_FOCMOTOR_TX,PIN_FOCMOTOR_RX,0x0012,PIN_Encoder2);
@@ -17,10 +25,14 @@ Endpoint client;
 
 int main (void)
 {
-		Connected = 1;
-		Process = 1;
-		SysEnable = 1;
+	Connected = 1;
+	Process = 1;
+	SysEnable = 1;
     printf("setting up\n");
+	topNotReached.mode(PullUp);
+	buttomNotReached.mode(PullUp);
+	topNotReached.fall(stop_platform);
+	buttomNotReached.fall(stop_platform);
     EthernetInterface eth;
     eth.init(IP,NETMASK,GATEWAY);
     eth.connect();

@@ -17,5 +17,9 @@ int ProcessGetEncoderChange(int argc, char *argv[]);
 int ProcessSetMaxAccel(int argc,char* argv[]);
 int ProcessHelp(int argc, char *argv[]);
 int ProcessRobotArmSet(int argc,char* argv[]);
+int ProcessPlatUp(int argc, char * argv[]);
+int ProcessPlatDown(int argc, char * argv[]);
+int CheckPlatTop(int argc, char * argv[]);
+int CheckPlatButtom(int argc, char * argv[]);
 
 #endif
