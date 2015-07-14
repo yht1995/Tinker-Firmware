@@ -7,4 +7,8 @@ void move_down_platform();
 
 void stop_platform();
 
+void top_reached_handler();
+
+void buttom_reached_handler();
+
 #endif

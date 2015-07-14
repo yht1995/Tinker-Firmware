@@ -24,3 +24,23 @@ void stop_platform()
 	upMoveOut = 0;
 	downMoveOut = 0;
 }
+
+void top_reached_handler()
+{
+	for(int i=0; i < 10; i++)
+	{
+		if(topNotReached) return;
+		wait_ms(10);
+	}
+	stop_platform();
+}
+
+void buttom_reached_handler()
+{
+	for(int i=0; i < 10; i++)
+	{
+		if(buttomNotReached) return;
+		wait_ms(10);
+	}
+	stop_platform();
+}

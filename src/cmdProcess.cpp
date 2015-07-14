@@ -19,7 +19,7 @@ tCmdLineEntry g_psCmdTable[] =
 	{ "PU", ProcessPlatUp, "PlatformUp" },
 	{ "PD", ProcessPlatDown, "PlatformDown"},
 	{ "CT", CheckPlatTop, "CheckPlatformTop"},
-	{ "CT", CheckPlatButtom, "CheckPlatformButtom"},
+	{ "CB", CheckPlatButtom, "CheckPlatformButtom"},
     { 0, 0, 0 }
 };
 

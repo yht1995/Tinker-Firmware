@@ -17,7 +17,7 @@
 	
 	#define PIN_UP_OUT P2_4
 	#define PIN_DOWN_OUT P2_5
-	#define PIN_TOP_REACH P0_28
-	#define PIN_BUTTOM_REACH P0_27
+	#define PIN_TOP_REACH P0_7
+	#define PIN_BUTTOM_REACH P0_8
 
 #endif

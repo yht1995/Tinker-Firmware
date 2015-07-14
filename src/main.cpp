@@ -29,10 +29,10 @@ int main (void)
 	Process = 1;
 	SysEnable = 1;
     printf("setting up\n");
+	topNotReached.fall(top_reached_handler);
+	buttomNotReached.fall(buttom_reached_handler);
 	topNotReached.mode(PullUp);
 	buttomNotReached.mode(PullUp);
-	topNotReached.fall(stop_platform);
-	buttomNotReached.fall(stop_platform);
     EthernetInterface eth;
     eth.init(IP,NETMASK,GATEWAY);
     eth.connect();
