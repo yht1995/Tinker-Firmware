@@ -1,7 +1,4 @@
+yotta_modules
+yotta_targets
 build
-*.bak
-*.yht
-.hg
-/*.uvopt
-*.hgignore
-*.ilb
+.yotta.json

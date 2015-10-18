@@ -1,9 +1,12 @@
 # Tinker-Firmware
-Building status: [![Build Status](http://407a.furoc.net:8111/app/rest/builds/buildType:(id:TinkerFirmware_Build)/statusIcon)](http://407a.furoc.net:8111/viewType.html?buildTypeId=TinkerFirmware_Build&guest=1)
-
 The Firmware of Tinker is based on ARM mbed
 
-![ARM mbed](https://mbed.org/static/img/mbed_logo.png)
+## 构建
+使用[yotta](http://yottadocs.mbed.com/)构建
+```
+yotta target frdm-k64f-gcc
+yotta build
+```
 
 ## 简介
 - 以命令的形式控制机器人底层硬件
@@ -12,10 +15,10 @@ The Firmware of Tinker is based on ARM mbed
 ## 硬件安装
 Mecanum轮的安装参考
 [Mecanum Wheel Robot](http://www.seeedstudio.com/wiki/4WD_Mecanum_Wheel_Robot_Kit_Series)
- 
+
 ## 配置说明
 配置信息保存在config.h文件中，包括：
-- IP地址 
+- IP地址
 - 端口
 - 电机方向
 
@@ -50,7 +53,7 @@ __功能__：获取编码器变化量
 __参数个数__：0
 
 __参数说明__：无
-  
+
 __返回值说明__：
   - （整数）编码器变化量 （__每次读取后清零__）
 
@@ -61,4 +64,3 @@ __参数个数__：6
 
 __参数说明__：
   - 参数1：（整数）舵机角度
-  

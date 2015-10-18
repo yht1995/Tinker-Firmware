@@ -1,0 +1,12 @@
+{
+    "name": "tinker-firmware",
+    "version": "0.0.0",
+    "bin": "./source",
+    "description": "The Firmware of Tinker",
+    "author": "yaoht <yht199505@gmail.com>",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "mbed-drivers": "~0.10.3",
+        "sockets": "~0.6.0"
+    }
+}
