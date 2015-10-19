@@ -3,6 +3,7 @@ The Firmware of Tinker is based on ARM mbed
 
 ## 构建
 使用[yotta](http://yottadocs.mbed.com/)构建
+
 ```
 yotta target frdm-k64f-gcc
 yotta build
@@ -13,8 +14,7 @@ yotta build
 - 采用UDP传输指令
 
 ## 硬件安装
-Mecanum轮的安装参考
-[Mecanum Wheel Robot](http://www.seeedstudio.com/wiki/4WD_Mecanum_Wheel_Robot_Kit_Series)
+Mecanum轮的安装参考 [Mecanum Wheel Robot](http://www.seeedstudio.com/wiki/4WD_Mecanum_Wheel_Robot_Kit_Series)
 
 ## 配置说明
 配置信息保存在config.h文件中，包括：
@@ -24,43 +24,33 @@ Mecanum轮的安装参考
 
 ## 命令说明
 ### EnableSystem / ES
-__功能__：使能电机驱动器
+**功能**：使能电机驱动器
 
-__参数个数__：0
+**参数个数**：0
 
-__参数说明__：无
+**参数说明**：无
 
 ### ShutdownSystem / SS
-__功能__：关闭电机驱动器
+**功能**：关闭电机驱动器
 
-__参数个数__：0
+**参数个数**：0
 
-__参数说明__：无
+**参数说明**：无
 
 ### SetRobotSpeed /SR
-__功能__：设置机器人速度
+**功能**：设置机器人速度
 
-__参数个数__：3
+**参数个数**：3
 
-__参数说明__：
-  - 参数1：（整数）X方向速度
-  - 参数2：（整数）Y方向速度
-  - 参数3：（整数）自转速度
+**参数说明**：
+- 参数1：（整数）X方向速度
+- 参数2：（整数）Y方向速度
+- 参数3：（整数）自转速度
 
-### GetEncoderChange / GE
-__功能__：获取编码器变化量
+### Subscribe / SI
+**功能**：订阅机器人信息
 
-__参数个数__：0
+**参数个数**：1
 
-__参数说明__：无
-
-__返回值说明__：
-  - （整数）编码器变化量 （__每次读取后清零__）
-
-### RobotArmSet
-__功能__：设置机械臂舵机角度
-
-__参数个数__：6
-
-__参数说明__：
-  - 参数1：（整数）舵机角度
+**参数说明**：
+- 参数1：（整数）刷新周期(ms)
