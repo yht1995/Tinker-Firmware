@@ -6,10 +6,15 @@
 #include "minar/minar.h"
 
 #include "cmdline/cmdline.h"
-#include "config.h"
 #include <string>
 
 using namespace mbed::Sockets::v0;
+
+static const int BUFFER_SIZE = 64;
+static const int PORT = 21;
+static const char* LOCAL_IP = "192.168.2.10";
+static const char* NETMASK = "255.255.255.0";
+static const char* GATEWAY = "192.168.2.1";
 
 EthernetInterface eth;
 UDPSocket *udpserver;
@@ -76,6 +81,7 @@ void app_start(int argc, char *argv[])
 	err = udpserver->bind("0.0.0.0", PORT);
 	udpserver->error_check(err);
 	udpserver->setOnReadable(UDPSocket::ReadableHandler_t(onRx));
+
 	return;
 }
 

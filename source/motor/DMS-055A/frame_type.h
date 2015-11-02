@@ -14,16 +14,15 @@ struct Single_Register_Frame {
 typedef struct Single_Register_Frame SRFrame;
 
 
-struct Mulit_Register_Frame {
+struct Double_Register_Frame {
 	uint8_t device_address;
 	uint8_t function_code;
 	uint16_t register_address;
-	uint16_t register_num;
-	uint8_t* register_data;
+	uint32_t register_data;
 	uint16_t crc;
 };
 
-typedef struct Mulit_Register_Frame MRFrame;
+typedef struct Double_Register_Frame DRFrame;
 
 
 struct Read_Frame_ACK {

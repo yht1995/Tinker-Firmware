@@ -3,19 +3,25 @@
 
 #include <mbed.h>
 #include "../DMS-055A/frame_type.h"
-#include "../DMS-055A/DMS-055A.h"
+#include "../RingBuffer/RingBuffer.h"
 
-typedef void (*RegisterOnAckHandler)(ReadFrameACK *readFrameACK);
 
 class MotorNal{
 public:
     MotorNal(PinName tx,PinName rx,PinName dir);
-    void RegisterOnAckHandler(RegisterOnAckHandler);
     void Send(SRFrame frame);
-    void Send(MRFrame frame);
+    void Send(DRFrame frame);
 private:
     Serial _serial;
     DigitalOut _dir;
+    RingBuffer tx_buffer;
+
+    int remain_to_send;
+    int remain_to_recieve;
+
+    void ScheduledSend();
+    void _RxIrq();
+    void _TxIrq();
 };
 
 #endif

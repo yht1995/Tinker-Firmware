@@ -1,11 +1,10 @@
 #ifndef __CONFIG_H_
 #define __CONFIG_H_
 
+#include <mbed.h>
 
-static const int BUFFER_SIZE = 64;
-static const int PORT = 21;
-static const char* LOCAL_IP = "192.168.2.10";
-static const char* NETMASK = "255.255.255.0";
-static const char* GATEWAY = "192.168.2.1";
+static const PinName PIN_MOTOR_TX = PTC17;
+static const PinName PIN_MOTOR_RX = PTC16;
+static const PinName PIN_RS485_DIR = PTB18;
 
 #endif
