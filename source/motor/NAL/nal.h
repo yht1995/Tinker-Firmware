@@ -3,7 +3,7 @@
 
 #include <mbed.h>
 #include "../DMS-055A/frame_type.h"
-#include "../RingBuffer/RingBuffer.h"
+#include "RingBuffer/RingBuffer.h"
 
 
 class MotorNal{
@@ -15,6 +15,7 @@ private:
     Serial _serial;
     DigitalOut _dir;
     RingBuffer tx_buffer;
+    Timeout _tx_timer;
 
     int remain_to_send;
     int remain_to_recieve;
@@ -22,6 +23,10 @@ private:
     void ScheduledSend();
     void _RxIrq();
     void _TxIrq();
+    void _TxFinishHandler();
+
+    static const int DIR_WRITE = 1;
+    static const int DIR_READ  = 0;
 };
 
 #endif

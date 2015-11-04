@@ -3,7 +3,7 @@
 #include "minar/minar.h"
 #include "core-util/FunctionPointer.h"
 
-#include "../CRC/CRC.h"
+#include "CRC/CRC.h"
 
 using namespace mbed::util;
 
@@ -14,13 +14,13 @@ MotorNal::MotorNal(PinName tx, PinName rx, PinName dir)
 	_serial.attach(this, &MotorNal::_RxIrq, (mbed::SerialBase::IrqType)RxIrq);
 	remain_to_send = 0;
 	remain_to_recieve = 0;
-	minar::Scheduler::postCallback(FunctionPointer0<void>(this, &MotorNal::ScheduledSend).bind()).period(minar::milliseconds(100));
+	minar::Scheduler::postCallback(FunctionPointer0<void>(this, &MotorNal::ScheduledSend).bind()).period(minar::milliseconds(40));
 }
 
 void MotorNal::Send(SRFrame frame)
 {
-	tx_buffer.push_back(8);
-	tx_buffer.push_back(8);
+	tx_buffer.push_back(8);		//Bytes to send
+	tx_buffer.push_back(8);		//Bytes to recieve
 	uint8_t msg[8] = { frame.device_address,
 			   frame.function_code,
 			   (uint8_t)(frame.register_address >> 8),
@@ -37,8 +37,8 @@ void MotorNal::Send(SRFrame frame)
 
 void MotorNal::Send(DRFrame frame)
 {
-	tx_buffer.push_back(13);
-	tx_buffer.push_back(8);
+	tx_buffer.push_back(13);	//Bytes to send
+	tx_buffer.push_back(8);		//Bytes to recieve
 	uint8_t msg[13] = { frame.device_address,
 			    frame.function_code,
 			    (uint8_t)(frame.register_address >> 8),
@@ -60,13 +60,20 @@ void MotorNal::Send(DRFrame frame)
 
 void MotorNal::ScheduledSend()
 {
+	static uint8_t time_out_count = 0;
 	if (remain_to_recieve == 0 && remain_to_send == 0) {
 		if (!tx_buffer.isEmpty()) {
 			remain_to_send = tx_buffer.pop_front();
 			remain_to_recieve = tx_buffer.pop_front();
-			_dir = 1;
+			_dir = DIR_WRITE;
 			_serial.attach(this, &MotorNal::_TxIrq, (mbed::SerialBase::IrqType)TxIrq);
 		}
+	}else{
+		time_out_count++;
+	}
+	if (time_out_count >=2) {
+		time_out_count = 0;
+		remain_to_recieve = 0;
 	}
 }
 
@@ -83,7 +90,11 @@ void MotorNal::_TxIrq()
 		remain_to_send--;
 	}else if (remain_to_send == 0) {
 		_serial.attach(NULL, (mbed::SerialBase::IrqType)TxIrq);
-		wait_us(550);
-		_dir = 0;
+		_tx_timer.attach_us(this,&MotorNal::_TxFinishHandler,550);
 	}
+}
+
+void MotorNal::_TxFinishHandler()
+{
+	_dir = DIR_READ;
 }
