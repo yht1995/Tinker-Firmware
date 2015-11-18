@@ -9,4 +9,5 @@ int EnableHandler(int argc, char *argv[]);
 int DisableHandler(int argc, char *argv[]);
 int SetSpeedHandler(int argc, char *argv[]);
 int SetPosHandler(int argc, char *argv[]);
+int SetGearHandler(int argc, char *argv[]);
 #endif

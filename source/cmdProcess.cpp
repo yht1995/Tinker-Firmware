@@ -30,6 +30,7 @@ tCmdLineEntry g_psCmdTable[] =
 	{ "DIS", DisableHandler, "Disable" },
 	{ "SS", SetSpeedHandler, "SetSpeed" },
 	{ "SP", SetPosHandler, "SetPos" },
+	{ "SG", SetGearHandler, "SetGear" },
 	{ 0, 0, 0 }
 };
 
@@ -100,7 +101,7 @@ int SetSpeedHandler(int argc, char *argv[])
 	const int correctArgc = 5;
 	if (argc == correctArgc) {
 		for (uint8_t i = 0; i < 4; i++) {
-			int speed = atoi(argv[i+1]);
+			int speed = atoi(argv[i + 1]);
 			motor_list[i]->SetTargetSpeed(speed);
 		}
 		return 0;
@@ -116,8 +117,25 @@ int SetPosHandler(int argc, char *argv[])
 	const int correctArgc = 5;
 	if (argc == correctArgc) {
 		for (uint8_t i = 0; i < 4; i++) {
-			int pos = atoi(argv[i+1]);
+			int pos = atoi(argv[i + 1]);
 			motor_list[i]->SetTargetPosition(pos);
+		}
+		return 0;
+	}else if (argc < correctArgc) {
+		return CMDLINE_TOO_FEW_ARGS;
+	}else{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+}
+
+int SetGearHandler(int argc, char *argv[])
+{
+	const int correctArgc = 3;
+	if (argc == correctArgc) {
+		int numerator = atoi(argv[1]);
+		int denominator = atoi(argv[2]);
+		for (uint8_t i = 0; i < 4; i++) {
+			motor_list[i]->SetGear(numerator, denominator);
 		}
 		return 0;
 	}else if (argc < correctArgc) {

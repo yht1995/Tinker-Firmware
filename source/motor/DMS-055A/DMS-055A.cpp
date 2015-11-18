@@ -33,6 +33,12 @@ void DMS055A::SetTargetPosition(int step)
 	send(ADDR_TARGET_POS, (uint32_t)step);
 }
 
+void DMS055A::SetGear(int numerator,int denominator)
+{
+	send(ADDR_GEAR_NUMERATOR,(uint16_t)numerator);
+	send(ADDR_GEAR_DENOMINATOR,(uint16_t)denominator);
+}
+
 void DMS055A::send(uint16_t addr, uint16_t data)
 {
 	SRFrame frame;

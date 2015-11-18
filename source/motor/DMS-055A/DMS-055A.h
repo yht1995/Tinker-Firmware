@@ -16,6 +16,7 @@ void EnableModbus(bool enable = true);
 void EnableOutput(bool enable = true);
 void SetTargetSpeed(int speed);
 void SetTargetPosition(int step);
+void SetGear(int numerator,int denominator);
 
 private:
 uint8_t _device_id;
@@ -35,6 +36,9 @@ static const uint8_t ADDR_TARGET_SPEED = 02;
 static const uint8_t ADDR_MAX_SPEED = 02;
 static const uint8_t ADDR_ACCEL = 03;
 static const uint8_t ADDR_MIN_SPEED = 04;
+static const uint8_t ADDR_GEAR_NUMERATOR = 10;
+static const uint8_t ADDR_GEAR_DENOMINATOR = 11;
 static const uint8_t ADDR_TARGET_POS = 12;
+
 };
 #endif
