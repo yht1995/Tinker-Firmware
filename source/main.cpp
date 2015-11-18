@@ -42,19 +42,19 @@ void onRx(Socket *s)
 
 		switch (result) {
 		case 0:
-			strcpy(response, "Command Completed!");
+			strcpy(response, "F");
 			break;
 		case CMDLINE_BAD_CMD:
-			strcpy(response, "Bad command!");
+			strcpy(response, "B");
 			break;
 		case CMDLINE_TOO_MANY_ARGS:
-			strcpy(response, "Too many arguments!");
+			strcpy(response, "E");
 			break;
 		case CMDLINE_TOO_FEW_ARGS:
-			strcpy(response, "Too few arguments!");
+			strcpy(response, "E");
 			break;
 		case CMDLINE_INVALID_ARG:
-			strcpy(response, "Invalid arguments!");
+			strcpy(response, "E");
 			break;
 		}
 		err = s->send_to(response, strlen(response), &addr, port);

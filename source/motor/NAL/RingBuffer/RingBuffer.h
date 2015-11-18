@@ -11,10 +11,12 @@ public:
 	void push_back(uint8_t d);
 	int pop_front(void);
     bool isEmpty();
+	int remain();
 private:
     int _capacity;
     int head;
     int tail;
+	int count;
 	uint8_t *buffer;
 };
 #endif

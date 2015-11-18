@@ -8,17 +8,19 @@
 using namespace mbed::util;
 
 MotorNal::MotorNal(PinName tx, PinName rx, PinName dir)
-	: _serial(tx, rx), _dir(dir), tx_buffer(64)
+	: _serial(tx, rx), _dir(dir), tx_buffer(256)
 {
 	_serial.baud(19200);
 	_serial.attach(this, &MotorNal::_RxIrq, (mbed::SerialBase::IrqType)RxIrq);
 	remain_to_send = 0;
 	remain_to_recieve = 0;
-	minar::Scheduler::postCallback(FunctionPointer0<void>(this, &MotorNal::ScheduledSend).bind()).period(minar::milliseconds(40));
+	minar::Scheduler::postCallback(FunctionPointer0<void>(this, &MotorNal::ScheduledSend).bind()).period(minar::milliseconds(10));
 }
 
 void MotorNal::Send(SRFrame frame)
 {
+	if(tx_buffer.remain() <=10)
+		return;
 	tx_buffer.push_back(8);		//Bytes to send
 	tx_buffer.push_back(8);		//Bytes to recieve
 	uint8_t msg[8] = { frame.device_address,
@@ -37,6 +39,8 @@ void MotorNal::Send(SRFrame frame)
 
 void MotorNal::Send(DRFrame frame)
 {
+	if(tx_buffer.remain() <=15)
+		return;
 	tx_buffer.push_back(13);	//Bytes to send
 	tx_buffer.push_back(8);		//Bytes to recieve
 	uint8_t msg[13] = { frame.device_address,

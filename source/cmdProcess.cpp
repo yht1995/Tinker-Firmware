@@ -16,15 +16,20 @@ extern mbed::Sockets::v0::UDPSocket *udpserver;
 
 MotorNal motorNal(PIN_MOTOR_TX, PIN_MOTOR_RX, PIN_RS485_DIR);
 MotorNal& DMS055A::nal = motorNal;
-DMS055A motor(1);
+DMS055A motor1(1);
+DMS055A motor2(2);
+DMS055A motor3(3);
+DMS055A motor4(4);
+DMS055A *motor_list[4] = { &motor1, &motor2, &motor3, &motor4 };
 
 
 tCmdLineEntry g_psCmdTable[] =
 {
 	{ "Subscribe", SubscribeHandler, "Subscribe" },
 	{ "EN", EnableHandler, "Enable" },
-	{ "SP", SetSpeedHandler, "SetSpeed" },
-	{ "SS", SetPosHandler, "SetPos" },
+	{ "DIS", DisableHandler, "Disable" },
+	{ "SS", SetSpeedHandler, "SetSpeed" },
+	{ "SP", SetPosHandler, "SetPos" },
 	{ 0, 0, 0 }
 };
 
@@ -61,8 +66,27 @@ int EnableHandler(int argc, char *argv[])
 	(void)argv;
 	const int correctArgc = 1;
 	if (argc == correctArgc) {
-		motor.EnableModbus();
-		motor.EnableOutput();
+		for (uint8_t i = 0; i < 4; i++) {
+			motor_list[i]->EnableModbus();
+			motor_list[i]->EnableOutput();
+		}
+		return 0;
+	}else if (argc < correctArgc) {
+		return CMDLINE_TOO_FEW_ARGS;
+	}else{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+}
+
+int DisableHandler(int argc, char *argv[])
+{
+	(void)argv;
+	const int correctArgc = 1;
+	if (argc == correctArgc) {
+		for (uint8_t i = 0; i < 4; i++) {
+			motor_list[i]->EnableModbus(false);
+			motor_list[i]->EnableOutput(false);
+		}
 		return 0;
 	}else if (argc < correctArgc) {
 		return CMDLINE_TOO_FEW_ARGS;
@@ -73,10 +97,12 @@ int EnableHandler(int argc, char *argv[])
 
 int SetSpeedHandler(int argc, char *argv[])
 {
-	const int correctArgc = 2;
+	const int correctArgc = 5;
 	if (argc == correctArgc) {
-		int speed = atoi(argv[1]);
-		motor.SetTargetSpeed(speed);
+		for (uint8_t i = 0; i < 4; i++) {
+			int speed = atoi(argv[i+1]);
+			motor_list[i]->SetTargetSpeed(speed);
+		}
 		return 0;
 	}else if (argc < correctArgc) {
 		return CMDLINE_TOO_FEW_ARGS;
@@ -87,10 +113,12 @@ int SetSpeedHandler(int argc, char *argv[])
 
 int SetPosHandler(int argc, char *argv[])
 {
-	const int correctArgc = 2;
+	const int correctArgc = 5;
 	if (argc == correctArgc) {
-		int pos = atoi(argv[1]);
-		motor.SetTargetPosition(pos);
+		for (uint8_t i = 0; i < 4; i++) {
+			int pos = atoi(argv[i+1]);
+			motor_list[i]->SetTargetPosition(pos);
+		}
 		return 0;
 	}else if (argc < correctArgc) {
 		return CMDLINE_TOO_FEW_ARGS;
