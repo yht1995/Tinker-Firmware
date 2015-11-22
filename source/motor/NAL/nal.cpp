@@ -14,15 +14,15 @@ MotorNal::MotorNal(PinName tx, PinName rx, PinName dir)
 	_serial.attach(this, &MotorNal::_RxIrq, (mbed::SerialBase::IrqType)RxIrq);
 	remain_to_send = 0;
 	remain_to_recieve = 0;
-	minar::Scheduler::postCallback(FunctionPointer0<void>(this, &MotorNal::ScheduledSend).bind()).period(minar::milliseconds(10));
+	minar::Scheduler::postCallback(FunctionPointer0<void>(this, &MotorNal::ScheduledSend).bind()).period(minar::milliseconds(3));
 }
 
 void MotorNal::Send(SRFrame frame)
 {
-	if(tx_buffer.remain() <=10)
+	if (tx_buffer.remain() <= 10)
 		return;
-	tx_buffer.push_back(8);		//Bytes to send
-	tx_buffer.push_back(8);		//Bytes to recieve
+	tx_buffer.push_back(8);         //Bytes to send
+	tx_buffer.push_back(8);         //Bytes to recieve
 	uint8_t msg[8] = { frame.device_address,
 			   frame.function_code,
 			   (uint8_t)(frame.register_address >> 8),
@@ -39,10 +39,10 @@ void MotorNal::Send(SRFrame frame)
 
 void MotorNal::Send(DRFrame frame)
 {
-	if(tx_buffer.remain() <=15)
+	if (tx_buffer.remain() <= 15)
 		return;
-	tx_buffer.push_back(13);	//Bytes to send
-	tx_buffer.push_back(8);		//Bytes to recieve
+	tx_buffer.push_back(13);        //Bytes to send
+	tx_buffer.push_back(8);         //Bytes to recieve
 	uint8_t msg[13] = { frame.device_address,
 			    frame.function_code,
 			    (uint8_t)(frame.register_address >> 8),
@@ -75,7 +75,7 @@ void MotorNal::ScheduledSend()
 	}else{
 		time_out_count++;
 	}
-	if (time_out_count >=2) {
+	if (time_out_count >= 2) {
 		time_out_count = 0;
 		remain_to_recieve = 0;
 	}
@@ -94,7 +94,7 @@ void MotorNal::_TxIrq()
 		remain_to_send--;
 	}else if (remain_to_send == 0) {
 		_serial.attach(NULL, (mbed::SerialBase::IrqType)TxIrq);
-		_tx_timer.attach_us(this,&MotorNal::_TxFinishHandler,550);
+		_tx_timer.attach_us(this, &MotorNal::_TxFinishHandler, 550);
 	}
 }
 

@@ -85,7 +85,7 @@ int DisableHandler(int argc, char *argv[])
 	const int correctArgc = 1;
 	if (argc == correctArgc) {
 		for (uint8_t i = 0; i < 4; i++) {
-			motor_list[i]->EnableModbus(false);
+			//motor_list[i]->EnableModbus(false);
 			motor_list[i]->EnableOutput(false);
 		}
 		return 0;

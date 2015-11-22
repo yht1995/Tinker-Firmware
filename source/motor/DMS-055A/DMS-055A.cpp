@@ -20,6 +20,7 @@ void DMS055A::EnableOutput(bool enable)
 		send(ADDR_OUTPUT_ENABLE, (uint16_t)1);
 	}else{
 		send(ADDR_OUTPUT_ENABLE, (uint16_t)0);
+		send(ADDR_OUTPUT_ENABLE, (uint16_t)0);
 	}
 }
 
@@ -30,7 +31,8 @@ void DMS055A::SetTargetSpeed(int speed)
 
 void DMS055A::SetTargetPosition(int step)
 {
-	send(ADDR_TARGET_POS, (uint32_t)step);
+	//send(ADDR_TARGET_POS, (uint32_t)step);
+	sendpos(step);
 }
 
 void DMS055A::SetGear(int numerator,int denominator)
@@ -57,6 +59,17 @@ void DMS055A::send(uint16_t addr, uint32_t data)
 	frame.function_code = FUNC_WRITE_DOUBLE;
 	frame.register_address = addr;
 	frame.register_data = data;
+
+	nal.Send(frame);
+}
+
+void DMS055A::sendpos(uint32_t data)
+{
+	SRFrame frame;
+	frame.device_address = this->_device_id;
+	frame.function_code = FUNC_WRITE_POS;
+	frame.register_address = data >> 16;
+	frame.register_data = data & 0xffff;
 
 	nal.Send(frame);
 }
