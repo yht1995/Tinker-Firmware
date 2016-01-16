@@ -32,8 +32,7 @@ void pwmout_write(pwmout_t* obj, float value) {
     FTM_HAL_SetClockSource(ftm_addrs[instance], kClock_source_FTM_SystemClk);
 }
 ```
-
-```
+完成修改后
 
 ```
 yotta build
