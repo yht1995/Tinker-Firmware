@@ -2,6 +2,7 @@
 #include "mbed-net-sockets/UDPSocket.h"
 #include "minar/minar.h"
 #include "core-util/FunctionPointer.h"
+#include "mbed-drivers/mbed.h"
 
 #include "cmdProcess.h"
 #include "config.h"
@@ -22,6 +23,15 @@ DMS055A motor3(3);
 DMS055A motor4(4);
 DMS055A *motor_list[4] = { &motor1, &motor2, &motor3, &motor4 };
 
+static PwmOut pwm_out[6] =
+{
+    PwmOut(PIN_PWM_BASE),
+    PwmOut(PIN_PWM_SHOULDER),
+    PwmOut(PIN_PWM_ELBOW),
+    PwmOut(PIN_PWM_WRIST1),
+    PwmOut(PIN_PWM_WRIST2),
+    PwmOut(PIN_PWM_WRIST3),
+};
 
 tCmdLineEntry g_psCmdTable[] =
 {
@@ -31,6 +41,7 @@ tCmdLineEntry g_psCmdTable[] =
 	{ "SS", SetSpeedHandler, "SetSpeed" },
 	{ "SP", SetPosHandler, "SetPos" },
 	{ "SG", SetGearHandler, "SetGear" },
+    { "SA", SetArmHandler, "SetArm" },
 	{ 0, 0, 0 }
 };
 
@@ -139,6 +150,29 @@ int SetGearHandler(int argc, char *argv[])
 		}
 		return 0;
 	}else if (argc < correctArgc) {
+		return CMDLINE_TOO_FEW_ARGS;
+	}else{
+		return CMDLINE_TOO_MANY_ARGS;
+	}
+}
+
+int SetArmHandler(int argc, char *argv[])
+{
+	const int correctArgc = 7;
+    printf("set arm %d\n", argc);
+    if (argc == correctArgc) {
+        printf("setting pwm\n");
+        for(int i=1; i<=6; i++) {
+            float width = atof(argv[i]);
+            if(width < 0.0 || width > 1.0) {
+                return CMDLINE_INVALID_ARG;
+            }
+            pwm_out[i-1] = width;
+        }
+        return 0;
+    }
+    else if (argc < correctArgc) {
+        printf("too few args\n");
 		return CMDLINE_TOO_FEW_ARGS;
 	}else{
 		return CMDLINE_TOO_MANY_ARGS;

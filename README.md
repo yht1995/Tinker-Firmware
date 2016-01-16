@@ -6,6 +6,36 @@ The Firmware of Tinker is based on ARM mbed
 
 ```
 yotta target frdm-k64f-gcc
+```
+
+由于mbed pwm库bug，现在需要手动修正一处：
+在`yotta_modules/mbed-hal-ksdk-mcu/source/pwmout_api.c`中，修改`pwmout_write`函数为以下内容:
+
+```
+static volatile uint16_t count_buf;
+void pwmout_write(pwmout_t* obj, float value) {
+    uint32_t instance = obj->pwm_name >> TPM_SHIFT;
+    if (value < 0.0f) {
+        value = 0.0f;
+    } else if (value > 1.0f) {
+        value = 1.0f;
+    }
+    uint32_t ftm_addrs[] = FTM_BASE_ADDRS;
+    uint16_t mod = FTM_HAL_GetMod(ftm_addrs[instance]);
+    uint16_t new_count = (uint16_t)((float)(mod) * value);
+    count_buf = new_count;
+    //debug("%u\n", mod, new_count);
+    // stop ftm clock to ensure instant update of mod register
+    FTM_HAL_SetClockSource(ftm_addrs[instance], kClock_source_FTM_None);
+    FTM_HAL_SetChnCountVal(ftm_addrs[instance], obj->pwm_name & 0xf, count_buf);
+    FTM_HAL_SetCounter(ftm_addrs[instance], 0);
+    FTM_HAL_SetClockSource(ftm_addrs[instance], kClock_source_FTM_SystemClk);
+}
+```
+
+```
+
+```
 yotta build
 ```
 

@@ -2,3 +2,5 @@ yotta_modules
 yotta_targets
 build
 .yotta.json
+tags
+.DS_Store

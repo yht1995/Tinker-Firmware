@@ -1,4 +1,4 @@
-#include <mbed.h>
+#include "mbed-drivers/mbed.h"
 #include "EthernetInterface.h"
 #include "mbed-net-sockets/UDPSocket.h"
 #include "mbed-net-lwip/lwipv4_init.h"
@@ -7,11 +7,13 @@
 
 #include "cmdline/cmdline.h"
 #include <string>
+#include "pwmout_api.h"
+#include "PeripheralPins.h"
 
 using namespace mbed::Sockets::v0;
 
 static const int BUFFER_SIZE = 64;
-static const int PORT = 21;
+static const int PORT = 5000;
 static const char* LOCAL_IP = "192.168.2.10";
 static const char* NETMASK = "255.255.255.0";
 static const char* GATEWAY = "192.168.2.1";
@@ -24,6 +26,7 @@ SocketAddr remote_addr;
 char buffer[BUFFER_SIZE] = { 0 };
 char response[BUFFER_SIZE] = { 0 };
 
+
 void onError(Socket *s, socket_error_t err)
 {
 	(void)s;
@@ -34,6 +37,7 @@ void onRx(Socket *s)
 {
 	uint16_t port;
 	size_t len = BUFFER_SIZE - 1;
+    printf("new packet\n");
 	/* Recieve the packet */
 	socket_error_t err = s->recv_from(buffer, &len, &addr, &port);
 	if (!s->error_check(err) && len) {
@@ -48,13 +52,13 @@ void onRx(Socket *s)
 			strcpy(response, "B");
 			break;
 		case CMDLINE_TOO_MANY_ARGS:
-			strcpy(response, "E");
+			strcpy(response, "M");
 			break;
 		case CMDLINE_TOO_FEW_ARGS:
-			strcpy(response, "E");
+			strcpy(response, "FEW");
 			break;
 		case CMDLINE_INVALID_ARG:
-			strcpy(response, "E");
+			strcpy(response, "I");
 			break;
 		}
 		err = s->send_to(response, strlen(response), &addr, port);
@@ -68,6 +72,9 @@ void app_start(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
+    //printf("%u\n", pinmap_peripheral(LED1, PinMap_PWM));
+    printf("hello\n");
+
 	eth.init(LOCAL_IP, NETMASK, GATEWAY);
 	eth.connect();
 	socket_error_t err = lwipv4_socket_init();
